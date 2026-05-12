@@ -4,14 +4,15 @@ export class GameOver extends Scene
 {
     camera: Phaser.Cameras.Scene2D.Camera;
     background: Phaser.GameObjects.Image;
-    gameover_text : Phaser.GameObjects.Text;
+    gameover_text: Phaser.GameObjects.Text;
+    gameover2_text: Phaser.GameObjects.Text;
 
-    constructor ()
+    constructor()
     {
         super('GameOver');
     }
 
-    create ()
+    create()
     {
         this.camera = this.cameras.main
         this.camera.setBackgroundColor(0xff0000);
@@ -23,13 +24,29 @@ export class GameOver extends Scene
             fontFamily: 'Arial Black', fontSize: 64, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
             align: 'center'
-        });
-        this.gameover_text.setOrigin(0.5);
+        }).setOrigin(0.5);
 
-        this.input.once('pointerdown', () => {
+        this.gameover2_text = this.add.text(512, 600, 'Play again?', {
+            fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
+            stroke: '#000000', strokeThickness: 8,
+            align: 'center'
+        }).setOrigin(0.5);
+        this.tweens.add(
+            {
+                targets: this.gameover2_text,
+                duration: 800,
+                alpha: 0.0,
+                ease: "Power",
+                yoyo: true,
+                repeat: -1,
+                delay: 400
+            }
+        )
+        this.gameover2_text.setInteractive()
 
+        this.gameover2_text.on('pointerdown', () =>
+        {
             this.scene.start('MainMenu');
-
         });
     }
 }

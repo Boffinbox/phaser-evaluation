@@ -5,7 +5,8 @@ export class Game extends Scene
     camera: Phaser.Cameras.Scene2D.Camera;
     background: Phaser.GameObjects.Image;
     timerText: Phaser.GameObjects.Text;
-    myCircle: Phaser.GameObjects.Sprite;
+    scoreText: Phaser.GameObjects.Text;
+    boff: Phaser.GameObjects.Sprite;
     nice: Phaser.Sound.BaseSound
     currScale: number
 
@@ -22,33 +23,40 @@ export class Game extends Scene
         this.background = this.add.image(512, 384, 'background');
         this.background.setAlpha(0.5);
 
-
-
-        this.myCircle = this.physics.add.sprite(512, 384, "circle")
-        this.myCircle.setInteractive(this.input.makePixelPerfect())
+        this.currScale = 0.6
+        this.boff = this.physics.add.sprite(512, 384, "boff")
+        this.boff.setInteractive(this.input.makePixelPerfect())
+        this.boff.scale = this.currScale
 
         this.nice = this.sound.add("nice")
 
-        this.currScale = 1
-
-        this.myCircle.on('pointerdown', () =>
-        {
-            console.log(`pew pew`)
-            this.myCircle.setPosition(Math.random() * 1024, Math.random() * 768)
-            this.currScale *= 0.95
-            this.myCircle.scale = this.currScale
-            this.nice.play({
-                rate: ((Math.random() + 0.5) * 1.4)
-            })
-        });
-
         let countdown = 10;
-        this.timerText = this.add.text(512, 384, `Time Left: ${countdown}`, {
+        this.timerText = this.add.text(10, 10, `Time Left: ${countdown}`, {
             fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
             align: 'center'
         });
-        this.timerText.setOrigin(0.5);
+
+        let score = 0;
+        this.scoreText = this.add.text(1014, 10, `Score: ${score}`, {
+            fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
+            stroke: '#000000', strokeThickness: 8,
+            align: 'center'
+        }).setOrigin(1, 0)
+
+        let playRate = 1
+        this.boff.on('pointerdown', () =>
+        {
+            this.boff.setPosition(Math.random() * 1024, Math.random() * 768)
+            this.currScale *= 0.90
+            this.boff.scale = this.currScale
+            score++
+            if (score > 1) playRate = ((Math.random() + 0.5) * 1.4)
+            this.nice.play({
+                rate: playRate
+            })
+            this.scoreText.setText(`Score: ${score}`)
+        });
 
         this.time.addEvent({
             delay: 1000,
