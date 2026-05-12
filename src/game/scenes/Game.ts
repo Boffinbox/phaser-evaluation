@@ -66,7 +66,7 @@ export class Game extends Scene
                 this.timerText.setText(`Time Left: ${countdown}`)
                 if (countdown <= 0)
                 {
-                    this.scene.start('GameOver');
+                    this.scene.start('GameOver', { score: score });
                 }
             },
             callbackScope: this,
