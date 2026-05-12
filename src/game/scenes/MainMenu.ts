@@ -6,12 +6,12 @@ export class MainMenu extends Scene
     logo: GameObjects.Image;
     title: GameObjects.Text;
 
-    constructor ()
+    constructor()
     {
         super('MainMenu');
     }
 
-    create ()
+    create()
     {
         this.background = this.add.image(512, 384, 'background');
 
@@ -23,7 +23,8 @@ export class MainMenu extends Scene
             align: 'center'
         }).setOrigin(0.5);
 
-        this.input.once('pointerdown', () => {
+        this.input.once('pointerdown', () =>
+        {
 
             this.scene.start('Game');
 
