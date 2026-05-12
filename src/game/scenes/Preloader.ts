@@ -35,6 +35,7 @@ export class Preloader extends Scene
 
         this.load.image('logo', 'logo.png');
         this.load.image("circle", "images/circle.png")
+        this.load.audio("nice", "audio/nice.wav")
     }
 
     create()
